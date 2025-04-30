@@ -1,30 +1,43 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
-<meta charset="utf-8"/>
-<title>D'Masiv - Rindu Tanpa Kamu</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<style>
+  <meta charset="UTF-8">
+  <title>Tulus - Hati-Hati di Jalan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #fafafa; }
     .chord { font-weight: bold; color: #0066cc; }
     .controls { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
     button { padding: 10px 16px; font-size: 16px; background-color: #007BFF; color: white; border: none; border-radius: 5px; }
     button:hover { background-color: #0056b3; }
     pre { background: white; padding: 20px; border-radius: 5px; white-space: pre-wrap; }
+    iframe { display: block; margin: 0 auto 30px auto; border-radius: 10px; }
+    .back { margin: 20px 0; }
   </style>
 </head>
 <body>
-<a href="index.html" style="text-decoration:none;color:#1db954;font-weight:bold;font-size:16px;">← Kembali ke Daftar Lagu</a><h2>D'Masiv - Rindu Tanpa Kamu</h2>
-<div class="controls">
-<button onclick="transpose(-1)">Transpose -</button>
-<button onclick="transpose(1)">Transpose +</button>
-<button onclick="resetTranspose()">Reset</button>
-<button onclick="toNumber()">Not Angka (Do = A)</button>
-</div>
-<pre id="chordSheet">
-(Chord dan lirik lagu belum dimasukkan)
-</pre>
+  <div class="back">
+    <a href="index.html" style="text-decoration:none;color:#007BFF;font-weight:bold;">← Kembali ke Daftar Lagu</a>
+  </div>
+
+  <!-- YouTube Embed -->
+  <iframe width="100%" height="315" src="https://www.youtube.com/embed/EzKkl64rRbM" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>
+
+  <h2>Tulus - Hati-Hati di Jalan</h2>
+  <div class="controls">
+    <button onclick="transpose(-1)">Transpose -</button>
+    <button onclick="transpose(1)">Transpose +</button>
+    <button onclick="resetTranspose()">Reset</button>
+    <button onclick="toNumber()">Not Angka (Do = A)</button>
+  </div>
+  <pre id="chordSheet">
+(Intro)
+<span class="chord">C</span>    <span class="chord">G</span>    <span class="chord">Am</span>
+(Chord dan lirik contoh)
+  </pre>
+
 <script>
 const chords = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 let originalHTML = "";
