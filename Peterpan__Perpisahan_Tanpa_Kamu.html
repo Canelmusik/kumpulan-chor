@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Peterpan - Perpisahan Tanpa Kamu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #fafafa; }
+    .chord { font-weight: bold; color: #0066cc; }
+    .controls { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+    button { padding: 10px 16px; font-size: 16px; background-color: #007BFF; color: white; border: none; border-radius: 5px; }
+    button:hover { background-color: #0056b3; }
+    pre { background: white; padding: 20px; border-radius: 5px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+<h2>Peterpan - Perpisahan Tanpa Kamu</h2>
+<div class="controls">
+  <button onclick="transpose(-1)">Transpose -</button>
+  <button onclick="transpose(1)">Transpose +</button>
+  <button onclick="resetTranspose()">Reset</button>
+  <button onclick="toNumber()">Not Angka (Do = A)</button>
+</div>
+<pre id="chordSheet">
+(Chord dan lirik lagu belum dimasukkan)
+</pre>
+<script>
+const chords = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+let originalHTML = "";
+window.onload = () => {
+  const el = document.getElementById("chordSheet");
+  if (el) originalHTML = el.innerHTML;
+};
+function transpose(step) {
+  document.querySelectorAll('.chord').forEach(el => {
+    let chordText = el.innerText;
+    let bass = null;
+    if (chordText.includes("/")) [chordText, bass] = chordText.split("/");
+    const rootRegex = /^[A-G](#|b)?/;
+    const rootMatch = chordText.match(rootRegex);
+    if (!rootMatch) return;
+    let root = rootMatch[0].replace("b", "#");
+    let suffix = chordText.slice(root.length);
+    let idx = chords.indexOf(root);
+    if (idx === -1) return;
+    idx = (idx + step + chords.length) % chords.length;
+    let newChord = chords[idx] + suffix;
+    if (bass) {
+      let bassRoot = bass.match(rootRegex)[0].replace("b", "#");
+      let bassIdx = chords.indexOf(bassRoot);
+      if (bassIdx !== -1) {
+        bassIdx = (bassIdx + step + chords.length) % chords.length;
+        newChord += "/" + chords[bassIdx] + bass.slice(bassRoot.length);
+      }
+    }
+    el.innerText = newChord;
+  });
+}
+function resetTranspose() {
+  document.getElementById("chordSheet").innerHTML = originalHTML;
+}
+function toNumber() {
+  const mapping = {
+    'A': '1', 'A#': '#1', 'Bb': '#1',
+    'B': '2', 'C': 'b3', 'C#': '3',
+    'D': '4', 'D#': '#4', 'Eb': '#4',
+    'E': '5', 'F': 'b6', 'F#': '6',
+    'G': 'b7', 'G#': '7'
+  };
+  document.querySelectorAll('.chord').forEach(el => {
+    let chordText = el.innerText;
+    let bass = null;
+    if (chordText.includes("/")) [chordText, bass] = chordText.split("/");
+    const rootRegex = /^[A-G](#|b)?/;
+    const rootMatch = chordText.match(rootRegex);
+    if (!rootMatch) return;
+    let root = rootMatch[0].replace("b", "#");
+    let suffix = chordText.slice(root.length);
+    let newChord = (mapping[root] || root) + suffix;
+    if (bass) {
+      let bassRoot = bass.match(rootRegex)[0].replace("b", "#");
+      let bassMapped = mapping[bassRoot] || bassRoot;
+      newChord += "/" + bassMapped + bass.slice(bassRoot.length);
+    }
+    el.innerText = newChord;
+  });
+}
+</script>
+</body>
+</html>
